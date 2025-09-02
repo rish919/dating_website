@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HeartQuirk Chat</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>💬 Quirky Chat</h2>
+    <div id="chatBox" class="card" style="height:300px; overflow-y:scroll; text-align:left;"></div>
+    <input type="text" id="msgInput" placeholder="Type a message..." style="width:70%; padding:8px;">
+    <button id="sendBtn">Send 💌</button>
+</div>
+
+<script>
+let chatBox = document.getElementById('chatBox');
+let msgInput = document.getElementById('msgInput');
+let sendBtn = document.getElementById('sendBtn');
+
+let messages = []; // In-memory messages for demo
+let username = localStorage.getItem('username') || 'Alice';
+
+function renderChat() {
+    chatBox.innerHTML = '';
+    messages.forEach(m => {
+        const p = document.createElement('p');
+        p.innerText = `${m.user}: ${m.msg}`;
+        chatBox.appendChild(p);
+    });
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+sendBtn.addEventListener('click', () => {
+    if(msgInput.value.trim() === '') return;
+    messages.push({user: username, msg: msgInput.value});
+    renderChat();
+    msgInput.value = '';
+});
+</script>
+</body>
+</html>
