@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - HeartQuirk</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header>💖 HeartQuirk 💖</header>
+
+<div class="container">
+    <h2>Login to Your Quirky Account</h2>
+    <form id="loginForm">
+        <input type="text" placeholder="Username" id="username" required><br>
+        <input type="password" placeholder="Password" id="password" required><br>
+        <button type="submit">Login</button>
+    </form>
+    <p id="loginMsg"></p>
+    <p>Don't have an account? <a href="signup.html">Sign up here</a></p>
+</div>
+
+<footer>
+    &copy; 2025 HeartQuirk | 
+    <a href="mailto:contact@heartquirk.com">Contact Us</a> | 
+    <a href="#">About</a> | 
+    <a href="#">Terms</a>
+</footer>
+
+<script src="js/main.js"></script>
+<script>
+const loginForm = document.getElementById('loginForm');
+const loginMsg = document.getElementById('loginMsg');
+
+loginForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+
+    const res = await fetch('/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json();
+    if (data.success) {
+        localStorage.setItem('username', username);
+        window.location.href = 'discover.html';
+    } else {
+        loginMsg.innerText = data.msg || "Login failed!";
+    }
+});
+</script>
+</body>
+</html>
