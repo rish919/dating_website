@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Quirky Match - HeartQuirk</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="container">
+    <h2>🎉 Your Quirky Match Story! 🎉</h2>
+    <div id="storyCard" class="card">
+        <p id="storyText">Loading your story...</p>
+        <button id="newStoryBtn">💖 Generate Another Story</button>
+    </div>
+</div>
+
+<script>
+const storyText = document.getElementById('storyText');
+const newStoryBtn = document.getElementById('newStoryBtn');
+
+let currentUser = localStorage.getItem('username') || 'Alice';
+let matches = JSON.parse(localStorage.getItem('matches') || '[]');
+
+function generateStory() {
+    if(matches.length === 0) {
+        storyText.innerText = "No matches yet! Go discover some quirky friends 😎";
+        return;
+    }
+    const matchUser = matches[Math.floor(Math.random()*matches.length)];
+    const storyTemplates = [
+        `${currentUser}, who loves coding in pajamas, bumps into ${matchUser.username}, who sings in the shower, at a karaoke night! 🎤`,
+        `One sunny day, ${currentUser} (quirk: ${currentUser.quirk}) meets ${matchUser.username} (quirk: ${matchUser.quirk}) while fighting over the last slice of pizza 🍕.`,
+        `In a magical library, ${currentUser} and ${matchUser.username} discover a book that writes their friendship story ✨.`,
+        `${currentUser} and ${matchUser.username} get trapped in an elevator and start sharing their quirks until they laugh uncontrollably 😂.`
+    ];
+    storyText.innerText = storyTemplates[Math.floor(Math.random()*storyTemplates.length)];
+}
+
+newStoryBtn.addEventListener('click', generateStory);
+generateStory();
+</script>
+</body>
+</html>
